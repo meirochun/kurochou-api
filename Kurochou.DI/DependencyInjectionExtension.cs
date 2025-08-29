@@ -32,6 +32,7 @@ public static class DependencyInjectionExtension
                 services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IAuthenticationService, AuthenticationService>();
                 services.AddScoped<IUploadService, UploadService>();
+                services.AddScoped<IUserService, UserService>();
         }
 
         private static void AddRepositories(this IServiceCollection services)
