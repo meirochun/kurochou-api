@@ -1,16 +1,22 @@
-﻿using Kurochou.API.Helpers;
-using Kurochou.Domain.DTO.Clips;
-using Kurochou.Domain.Interface.Service;
+﻿using Kurochou.App.DTO.Clips.Request;
+using Kurochou.App.Interfaces.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kurochou.API.Controllers;
 
-public class ClipController(IUploadService uploadService) : KuroController
+public class ClipController(IClipService uploadService) : KuroController
 {
-        [HttpPost("Upload")]
-        public async Task<IResult> Upload([FromForm] UploadRequest request, CancellationToken cancellationToken)
-        {
-                var clipId = await uploadService.Upload(request, request.UserId, cancellationToken);
-                return ApiResult.Success(clipId);
-        }
+    [HttpGet]
+    public async Task<IResult> GetClips(CancellationToken cancellationToken)
+    {
+        var clips = await uploadService.GetClipsAsync(cancellationToken);
+        return Response(clips);
+    }
+
+    [HttpPost("upload")]
+    public async Task<IResult> UploadClip([FromBody] UploadRequest request, CancellationToken cancellationToken)
+    {
+        var clipId = await uploadService.UploadAsync(request, cancellationToken);
+        return Response(clipId);
+    }
 }

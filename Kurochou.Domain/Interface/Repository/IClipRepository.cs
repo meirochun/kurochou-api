@@ -1,4 +1,4 @@
-﻿using Kurochou.Domain.Model;
+﻿using Kurochou.Domain.Entities;
 
 namespace Kurochou.Domain.Interface.Repository;
 

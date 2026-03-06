@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.API", "Kurochou.API\Kurochou.API.csproj", "{A3EFAC4C-4F4F-4988-9822-8041A1AF1DBE}"
 EndProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.DI", "Kurochou.DI\Kurochou.DI.csproj", "{22B232C1-72CC-4A1B-83FA-D26ADE8CF9BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.Infra", "Kurochou.Infra\Kurochou.Infra.csproj", "{D2636F4D-A137-4166-905F-F74CD9D54F48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.App", "Kurochou.App\Kurochou.App.csproj", "{B8A58259-6083-4BBC-9A25-12BA63700271}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{D2636F4D-A137-4166-905F-F74CD9D54F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2636F4D-A137-4166-905F-F74CD9D54F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2636F4D-A137-4166-905F-F74CD9D54F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A58259-6083-4BBC-9A25-12BA63700271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A58259-6083-4BBC-9A25-12BA63700271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A58259-6083-4BBC-9A25-12BA63700271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A58259-6083-4BBC-9A25-12BA63700271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

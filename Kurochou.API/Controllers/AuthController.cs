@@ -1,38 +1,31 @@
-﻿using Kurochou.API.Helpers;
-using Kurochou.Domain.DTO.Auth;
-using Kurochou.Domain.Interface.Service;
+﻿using Kurochou.App.DTO.User.Request;
+using Kurochou.App.Interfaces.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kurochou.API.Controllers;
 
-public class AuthController(IAuthenticationService service) : KuroController
+public class AuthController(IAuthenticationService authService) : KuroController
 {
-        [HttpPost("Register")]
-        [Authorize("AdminPolicy")]
-        public async Task<IResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken cancellationToken)
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<IResult> LoginAsync([FromBody] LoginRequest request, CancellationToken cancellationToken)
+    {
+        var result = await authService.Login(request, cancellationToken);
+
+        if (!result.Success)
         {
-                var result = await service.Register(request, cancellationToken);
-
-                if (result is null)
-                {
-                        return ApiResult.Failure("Unable to register the user");
-                }
-
-                return ApiResult.Success(result, "Registered successfully");
+            return Failure("Invalid username or password", 401);
         }
 
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IResult> LoginAsync([FromBody] LoginRequest request, CancellationToken cancellationToken)
-        {
-                var result = await service.Login(request, cancellationToken);
+        return Response(result);
+    }
 
-                if (result is null || string.IsNullOrWhiteSpace(result.Token))
-                {
-                        return ApiResult.Failure("Invalid username or password", 401);
-                }
-
-                return ApiResult.Success(result, "Logged in successfully");
-        }
+    [HttpDelete("logout")]
+    [AllowAnonymous]
+    public async Task<IResult> LogoutAsync(CancellationToken cancellationToken)
+    {
+        await authService.Logout(cancellationToken);
+        return NoContent();
+    }
 }

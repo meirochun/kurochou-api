@@ -39,3 +39,7 @@ _ReSharper*/
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+# Important stuff
+/Kurochou.API/appsettings.Development.json
+/Kurochou.API/appsettings.Production.json

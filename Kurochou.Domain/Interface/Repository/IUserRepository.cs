@@ -1,9 +1,9 @@
-using Kurochou.Domain.Model;
+using Kurochou.Domain.Entities;
 
 namespace Kurochou.Domain.Interface.Repository;
 
 public interface IUserRepository : IRepository<User>
 {
-        Task<User?> GetByUsernameAsync(string username);
-        Task<IEnumerable<User?>> GetUsersAsync(string search, CancellationToken cancellationToken);
+    Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken);
+    Task<IEnumerable<User?>> GetUsersAsync(string? username, CancellationToken cancellationToken);
 }
