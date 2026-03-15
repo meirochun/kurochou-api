@@ -1,5 +1,7 @@
 ﻿using Kurochou.App.Interfaces.Service;
+using Kurochou.App.Interfaces.Service.Auth;
 using Kurochou.App.Service;
+using Kurochou.App.Service.Auth;
 using Kurochou.Domain.Interface.Repository;
 using Kurochou.Infra.Common;
 using Kurochou.Infra.Repositories;
@@ -37,6 +39,7 @@ public static class DIExtension
         services.AddScoped<IClipService, ClipService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
         // Transients
         services.AddTransient<HttpClient>();

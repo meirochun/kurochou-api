@@ -1,5 +1,6 @@
 ﻿using Kurochou.App.DTO.Clips.Request;
 using Kurochou.App.Interfaces.Service;
+using Kurochou.App.Interfaces.Service.Auth;
 using Kurochou.Domain.Entities;
 using Kurochou.Domain.Interface.Repository;
 

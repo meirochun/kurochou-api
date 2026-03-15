@@ -7,7 +7,8 @@ namespace Kurochou.Domain.Entities;
 public class User : BaseEntity
 {
     public string Username { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
+    public string? PasswordHash { get; set; }
+    public string? GoogleId { get; set; }
     public UserRole Role { get; set; }
 
     public void Update(string username, string passwordHash, UserRole role)
