@@ -2,7 +2,7 @@
 using Kurochou.App.DTO.User.Request;
 using Kurochou.App.DTO.User.Response;
 
-namespace Kurochou.App.Interfaces.Service;
+namespace Kurochou.App.Interfaces.Service.Auth;
 
 public interface IAuthenticationService
 {

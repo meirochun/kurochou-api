@@ -9,7 +9,7 @@ public class UserRepository(IDbConnection conn) : Repository<User>(conn), IUserR
 {
     private readonly IDbConnection _conn = conn;
 
-    public async Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
+    public async Task<User?> GetByUsernameAsync(string username, CancellationToken _)
     {
         const string sql = @"
             SELECT
@@ -23,7 +23,21 @@ public class UserRepository(IDbConnection conn) : Repository<User>(conn), IUserR
         return await _conn.QueryFirstOrDefaultAsync<User?>(sql, new { Username = username });
     }
 
-    public async Task<IEnumerable<User?>> GetUsersAsync(string? search, CancellationToken cancellationToken)
+    public async Task<User?> GetByGoogleIdAsync(string googleId, CancellationToken _)
+    {
+        const string sql = @"
+            SELECT
+                id,
+                username,
+                role,
+                google_id GoogleId
+            FROM users
+            WHERE google_id = @GoogleId";
+
+        return await _conn.QueryFirstOrDefaultAsync<User?>(sql, new { GoogleId = googleId });
+    }
+
+    public async Task<IEnumerable<User?>> GetUsersAsync(string? search, CancellationToken _)
     {
         var sql = "SELECT username, role FROM users";
 

@@ -3,10 +3,11 @@ using Kurochou.App.DTO.User.Request;
 using Kurochou.App.DTO.User.Response;
 using Kurochou.App.Helper;
 using Kurochou.App.Interfaces.Service;
+using Kurochou.App.Interfaces.Service.Auth;
 using Kurochou.Domain.Interface.Repository;
 using Microsoft.AspNetCore.Http;
 
-namespace Kurochou.App.Service;
+namespace Kurochou.App.Service.Auth;
 
 public class AuthenticationService(
         ITokenService tokenService,
