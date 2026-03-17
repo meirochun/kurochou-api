@@ -6,7 +6,7 @@ using Kurochou.Domain.Interface.Repository;
 
 namespace Kurochou.App.Service;
 
-public class ClipService(IClipRepository clipRepository, IAuthenticationService authService) : IClipService
+public class ClipService(IClipRepository clipRepository, IAuthService authService) : IClipService
 {
     public async Task<IEnumerable<Clip>> GetClipsAsync(CancellationToken cancellationToken)
     {

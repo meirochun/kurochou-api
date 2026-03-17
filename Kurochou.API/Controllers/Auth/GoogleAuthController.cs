@@ -27,7 +27,7 @@ public class GoogleAuthController(IGoogleAuthService googleAuthService) : KuroCo
     [AllowAnonymous]
     public async Task<IResult> GoogleResponse(CancellationToken cancellationToken)
     {
-        var response = await _googleAuthService.GetJwtToken(User, cancellationToken);
+        var response = await _googleAuthService.GetJwtToken(cancellationToken);
         return Response(response);
     }
 }

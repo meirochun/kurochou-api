@@ -5,6 +5,8 @@ using Kurochou.App.Service.Auth;
 using Kurochou.Domain.Interface.Repository;
 using Kurochou.Infra.Common;
 using Kurochou.Infra.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using System.Data;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
 
@@ -24,7 +27,7 @@ public static class DIExtension
     public static void AddDependencies(this IServiceCollection services, IConfiguration config)
     {
         services.AddServices();
-        services.AddJwt(config);
+        services.AddAuth(config);
         services.AddControllers();
         services.AddRepositories();
         services.AddDatabase(config);
@@ -38,7 +41,7 @@ public static class DIExtension
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IClipService, ClipService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
         // Transients
@@ -61,28 +64,44 @@ public static class DIExtension
         });
     }
 
-    private static void AddJwt(this IServiceCollection services, IConfiguration config)
+    private static void AddAuth(this IServiceCollection services, IConfiguration config)
     {
-        services.Configure<JwtSettings>(config.GetSection("Jwt"));
-
-        var jwtSettings = config.GetSection("Jwt").Get<JwtSettings>()!;
+        services.Configure<AuthenticationSettings>(config.GetSection("Authentication"));
 
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(options =>
+        .AddCookie()
+        .AddGoogle(options =>
         {
+            options.ClientId = config["Authentication:Google:ClientId"]!;
+            options.ClientSecret = config["Authentication:Google:ClientSecret"]!;
+            options.CallbackPath = "/api/googleauth/signin-google";
+            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            options.Scope.Add("email");
+            options.Scope.Add("profile");
+
+            options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub"); // Google ID
+            options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+        })
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+        {
+            var jwtSettings = config.GetSection("Authentication").Get<AuthenticationSettings>()!;
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings.Issuer,
-                ValidAudience = jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+                ValidIssuer = jwtSettings.Jwt.Issuer,
+                ValidAudience = jwtSettings.Jwt.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Jwt.Key)),
+                ClockSkew = TimeSpan.Zero // optional: removes default 5min tolerance
             };
         });
 

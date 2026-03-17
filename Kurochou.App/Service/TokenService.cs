@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Kurochou.App.Service;
 
-public class TokenService(IOptions<JwtSettings> settings) : ITokenService
+public class TokenService(IOptions<AuthenticationSettings> settings) : ITokenService
 {
-    private readonly JwtSettings _settings = settings.Value;
+    private readonly AuthenticationSettings _settings = settings.Value;
 
     public string GenerateToken(User user)
     {
@@ -22,14 +22,14 @@ public class TokenService(IOptions<JwtSettings> settings) : ITokenService
             new Claim("userId", user.Id.ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Key));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Jwt.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-                issuer: _settings.Issuer,
-                audience: _settings.Audience,
+                issuer: _settings.Jwt.Issuer,
+                audience: _settings.Jwt.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_settings.ExpirationMinutes),
+                expires: DateTime.UtcNow.AddMinutes(_settings.Jwt.ExpirationMinutes),
                 signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

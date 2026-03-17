@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace Kurochou.App.Service.Auth;
 
-public class AuthenticationService(
+public class AuthService(
         ITokenService tokenService,
         IUserRepository repository,
-        IHttpContextAccessor httpContextAccessor) : IAuthenticationService
+        IHttpContextAccessor httpContextAccessor) : IAuthService
 {
     public async Task<Result<AuthResponseDTO?>> Login(LoginRequest request, CancellationToken cancellationToken)
     {
