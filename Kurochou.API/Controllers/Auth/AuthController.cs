@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kurochou.API.Controllers.Auth;
 
-public class AuthController(IAuthenticationService authService) : KuroController
+public class AuthController(IAuthService authService) : KuroController
 {
     [HttpPost("login")]
     [AllowAnonymous]

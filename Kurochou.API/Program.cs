@@ -1,6 +1,4 @@
 using Kurochou.DI;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +15,11 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 builder.Services.AddDependencies(builder.Configuration);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-            policy => policy.WithOrigins("http://localhost:3000")
+    options.AddPolicy("AllowFrontend", policy => policy
+            .WithOrigins("http://localhost:3000")
             .AllowAnyHeader()
-            .AllowAnyMethod());
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
 
 builder.Services.AddRouting(config =>
@@ -29,25 +28,9 @@ builder.Services.AddRouting(config =>
     config.LowercaseQueryStrings = true;
 });
 
-builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-    })
-    .AddCookie()
-    .AddGoogle(options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
-        options.CallbackPath = "/api/googleauth/signin-google";
-        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    });
-
 builder.Services.AddAuthorization();
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -57,11 +40,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowFrontend");
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("AllowFrontend");
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();

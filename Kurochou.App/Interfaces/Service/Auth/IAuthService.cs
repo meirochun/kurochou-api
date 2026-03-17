@@ -4,7 +4,7 @@ using Kurochou.App.DTO.User.Response;
 
 namespace Kurochou.App.Interfaces.Service.Auth;
 
-public interface IAuthenticationService
+public interface IAuthService
 {
     Task<Result<AuthResponseDTO?>> Login(LoginRequest request, CancellationToken cancellationToken);
     Guid GetUserId();

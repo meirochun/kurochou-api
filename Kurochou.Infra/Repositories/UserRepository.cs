@@ -16,7 +16,9 @@ public class UserRepository(IDbConnection conn) : Repository<User>(conn), IUserR
                 id,
                 username,
                 password_hash,
-                role
+                role,
+                created_at,
+                updated_at
             FROM users
             WHERE username = @Username";
 
@@ -30,7 +32,7 @@ public class UserRepository(IDbConnection conn) : Repository<User>(conn), IUserR
                 id,
                 username,
                 role,
-                google_id GoogleId
+                google_id
             FROM users
             WHERE google_id = @GoogleId";
 
@@ -39,7 +41,7 @@ public class UserRepository(IDbConnection conn) : Repository<User>(conn), IUserR
 
     public async Task<IEnumerable<User?>> GetUsersAsync(string? search, CancellationToken _)
     {
-        var sql = "SELECT username, role FROM users";
+        var sql = "SELECT id, username, role FROM users";
 
         if (!string.IsNullOrWhiteSpace(search))
             sql += " WHERE username LIKE '%' || @Username || '%'";
