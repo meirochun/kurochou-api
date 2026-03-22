@@ -2,6 +2,7 @@ using Kurochou.App.DTO;
 using Kurochou.App.DTO.User.Request;
 using Kurochou.App.Helper;
 using Kurochou.App.Interfaces.Service;
+using Kurochou.Domain.DTO;
 using Kurochou.Domain.Entities;
 using Kurochou.Domain.Interface.Repository;
 
@@ -11,10 +12,10 @@ public class UserService(IUserRepository repository) : IUserService
 {
     private readonly IUserRepository _repository = repository;
 
-    public async Task<Result<IEnumerable<User?>>> GetUsersAsync(GetUserRequest request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<UserWithClipCount?>>> GetUsersAsync(GetUserRequest request, CancellationToken cancellationToken)
     {
         var result = await _repository.GetUsersAsync(request.Search, cancellationToken);
-        return Result<IEnumerable<User?>>.Ok(result);
+        return Result<IEnumerable<UserWithClipCount?>>.Ok(result);
     }
 
     public async Task<Result<Guid>> CreateUserAsync(CreateUserRequest request, CancellationToken cancellationToken)
