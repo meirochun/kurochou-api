@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.Infra", "Kurochou.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.App", "Kurochou.App\Kurochou.App.csproj", "{B8A58259-6083-4BBC-9A25-12BA63700271}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurochou.Data", "Kurochou.Data\Kurochou.Data.csproj", "{77FDBA26-E6BB-49C0-A37C-706D61C40A97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{B8A58259-6083-4BBC-9A25-12BA63700271}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8A58259-6083-4BBC-9A25-12BA63700271}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8A58259-6083-4BBC-9A25-12BA63700271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77FDBA26-E6BB-49C0-A37C-706D61C40A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77FDBA26-E6BB-49C0-A37C-706D61C40A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77FDBA26-E6BB-49C0-A37C-706D61C40A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77FDBA26-E6BB-49C0-A37C-706D61C40A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

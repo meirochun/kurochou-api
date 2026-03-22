@@ -2,9 +2,9 @@
 using Kurochou.App.Interfaces.Service.Auth;
 using Kurochou.App.Service;
 using Kurochou.App.Service.Auth;
+using Kurochou.Data.Repositories;
 using Kurochou.Domain.Interface.Repository;
 using Kurochou.Infra.Common;
-using Kurochou.Infra.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

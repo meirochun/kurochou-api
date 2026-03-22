@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Reflection;
 
-namespace Kurochou.Infra.Repositories;
+namespace Kurochou.Data.Repositories;
 
 public class Repository<T>(IDbConnection conn) : IRepository<T> where T : class
 {
